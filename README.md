@@ -1,0 +1,2 @@
+# bitmaps
+bitmap manipulations
