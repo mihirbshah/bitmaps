@@ -4,3 +4,4 @@
 Debug/bitmaps*
 Debug/src/bitmaps*
 Debug/src/bitmaps.o
+bitmaps.o
