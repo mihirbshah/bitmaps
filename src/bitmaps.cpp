@@ -9,17 +9,29 @@
 #include "bitboard.h"
 
 int main() {
-    Bitboard a_file = C64(0x0101010101010101);
-    display_bb(a_file, "a-file");
+    /*Bitboard a_file = C64(0x0101010101010101);
+    disp_bb(a_file, "a-file");
     Bitboard h_file = C64(0x8080808080808080);
-    display_bb(h_file, "h-file");
+    disp_bb(h_file, "h-file");
     Bitboard rank_8 = C64(0xFF00000000000000);
-    display_bb(rank_8, "rank 8");
+    disp_bb(rank_8, "rank 8");
     Bitboard rank_1 = C64(0x00000000000000FF);
-    display_bb(rank_1, "rank 1");
+    disp_bb(rank_1, "rank 1");
     Bitboard a1h8_diag = C64(0x8040201008040201);
-    display_bb(a1h8_diag, "a1h8 diagonal");
+    disp_bb(a1h8_diag, "a1h8 diagonal");
     Bitboard light_sq = C64(0x55AA55AA55AA55AA);
-    display_bb(light_sq, "light squares");
+    disp_bb(light_sq, "light squares");*/
+
+	Bitboard b1 = C64(0x0100000000000000);
+	disp_bb(b1, "Input");
+	disp_bb(east_one(b1), "Shift east");
+	disp_bb(west_one(b1), "Shift west");
+	disp_bb(north_one(b1), "Shift north");
+	disp_bb(south_one(b1), "Shift south");
+	disp_bb(ne_one(b1), "Shift north-east");
+	disp_bb(nw_one(b1), "Shift north-west");
+	disp_bb(se_one(b1), "Shift south-east");
+	disp_bb(sw_one(b1), "Shift south-west");
+
 	return 0;
 }

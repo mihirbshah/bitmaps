@@ -17,7 +17,7 @@
 // 64 bit
 typedef unsigned long long Bitboard;
 
-void display_bb(Bitboard b, const std::string& header = std::string())
+void disp_bb(Bitboard b, const std::string& header = std::string())
 {
 	std::cout << header << ":\n\n";
 	// mask to extract MSB
@@ -43,9 +43,66 @@ void display_bb(Bitboard b, const std::string& header = std::string())
 		b = b << 1; // drop MSB
 	}
 	// unicode for continuous horizontal dash
-	const char* hdash  = "\u2500\u2500\u2500\u2500\u2500\u2500\u2500";
-	std::cout << hdash << hdash << hdash << hdash << "\n";
+	//const char* hdash  = "\u2500\u2500\u2500\u2500\u2500\u2500\u2500";
+	//std::cout << hdash << hdash << hdash << hdash << std::endl;
+	std::cout << "---------------------------\n";
 	std::cout << "  | a  b  c  d  e  f  g  h  \n\n";
 }
+
+
+/* Bitboard shifts
+  northwest    north   northeast
+  noWe         nort         noEa
+          +7    +8    +9
+              \  |  /
+  west    -1 <-  0 -> +1    east
+              /  |  \
+          -9    -8    -7
+  soWe         sout         soEa
+  southwest    south   southeast
+*/
+Bitboard south_one(Bitboard b)
+{
+	return b >> 8;
+}
+
+Bitboard north_one(Bitboard b)
+{
+	return b << 8;
+}
+
+const Bitboard not_a_file = C64(0xfefefefefefefefe); // ~0x0101010101010101
+const Bitboard not_h_file = C64(0x7f7f7f7f7f7f7f7f); // ~0x8080808080808080
+
+Bitboard east_one(Bitboard b)
+{
+	return (b << 1) & not_a_file;
+}
+
+Bitboard west_one(Bitboard b)
+{
+	return (b >> 1) & not_h_file;
+}
+
+Bitboard ne_one(Bitboard b)
+{
+	return (b << 9) & not_a_file;
+}
+
+Bitboard nw_one(Bitboard b)
+{
+	return (b << 7) & not_h_file;
+}
+
+Bitboard se_one(Bitboard b)
+{
+	return (b >> 7) & not_a_file;
+}
+
+Bitboard sw_one(Bitboard b)
+{
+	return (b >> 9) & not_h_file;
+}
+
 
 #endif /* BITBOARD_H_ */
