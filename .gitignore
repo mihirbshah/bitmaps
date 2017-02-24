@@ -1,3 +1,6 @@
 # Ignore Eclipse project files
 .cproject
 .project
+Debug/bitmaps*
+Debug/src/bitmaps*
+Debug/src/bitmaps.o
