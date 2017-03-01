@@ -71,8 +71,11 @@ Bitboard north_one(Bitboard b)
 	return b << 8;
 }
 
-const Bitboard not_a_file = C64(0xfefefefefefefefe); // ~0x0101010101010101
-const Bitboard not_h_file = C64(0x7f7f7f7f7f7f7f7f); // ~0x8080808080808080
+namespace
+{
+	const Bitboard not_a_file = C64(0xfefefefefefefefe); // ~0x0101010101010101
+	const Bitboard not_h_file = C64(0x7f7f7f7f7f7f7f7f); // ~0x8080808080808080
+};
 
 Bitboard east_one(Bitboard b)
 {
@@ -104,28 +107,63 @@ Bitboard sw_one(Bitboard b)
 	return (b >> 9) & not_h_file;
 }
 
+
 enum ray_dir {ne, east, se, south, sw, west, nw, north};
+
+namespace
+{
+//                ne e  se  s   sw  w   nw n
+short shift[8] = {9, 1, -7, -8, -9, -1, 7, 8};
+
+Bitboard shift_mask[8] =
+{
+	C64(0xfefefefefefefefe), // ne
+	C64(0xfefefefefefefefe), // e
+	C64(0xfefefefefefefefe), // se
+	C64(0xffffffffffffffff), // s
+	C64(0x7f7f7f7f7f7f7f7f), // sw
+	C64(0x7f7f7f7f7f7f7f7f), // w
+	C64(0x7f7f7f7f7f7f7f7f), // nw
+	C64(0xffffffffffffffff)  // n
+};
+
+Bitboard rotate_mask[8] =
+{
+	C64(0xfefefefefefefe00), // ne
+	C64(0xfefefefefefefefe), // e
+	C64(0x00fefefefefefefe), // se
+	C64(0x00ffffffffffffff), // s
+	C64(0x007f7f7f7f7f7f7f), // sw
+	C64(0x7f7f7f7f7f7f7f7f), // w
+	C64(0x7f7f7f7f7f7f7f00), // nw
+	C64(0xffffffffffffff00)  // n
+};
+
+};
 
 Bitboard shift_one(Bitboard b, ray_dir dir)
 {
-	//                ne e  se  s   sw  w   nw n
-	short shift[8] = {9, 1, -7, -8, -9, -1, 7, 8};
-	Bitboard mask[8] =
-	{
-		C64(0xfefefefefefefefe), // ne
-		C64(0xfefefefefefefefe), // e
-		C64(0xfefefefefefefefe), // se
-		C64(0xffffffffffffffff), // s
-		C64(0x7f7f7f7f7f7f7f7f), // sw
-		C64(0x7f7f7f7f7f7f7f7f), // w
-		C64(0x7f7f7f7f7f7f7f7f), // nw
-		C64(0xffffffffffffffff)  // n
-	};
-
 	if (shift[dir] > 0)
-		return (b << shift[dir]) & mask[dir]; // n, e, ne, nw
+		return (b << shift[dir]) & shift_mask[dir]; // n, e, ne, nw
 	else
-		return (b >> abs(shift[dir])) & mask[dir]; // s, w, se, sw
+		return (b >> abs(shift[dir])) & shift_mask[dir]; // s, w, se, sw
 }
+
+/* Bitboard rotation */
+Bitboard rotl64(Bitboard b, short pos)
+{
+	return (b << pos) | (b >> (64 - pos));
+}
+
+Bitboard rotr64(Bitboard b, short pos)
+{
+	return (b >> pos) | (b << (64 - pos));
+}
+
+Bitboard rotate_one(Bitboard b, ray_dir dir)
+{
+	return rotl64(b, shift[dir]) & rotate_mask[dir];
+}
+
 
 #endif /* BITBOARD_H_ */
