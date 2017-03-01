@@ -23,7 +23,7 @@ int main() {
     disp_bb(light_sq, "light squares");*/
 
 	Bitboard b1 = C64(0x0100000000000000);
-	disp_bb(b1, "Input");
+	/*(b1, "Input");
 	disp_bb(east_one(b1), "Shift east");
 	disp_bb(west_one(b1), "Shift west");
 	disp_bb(north_one(b1), "Shift north");
@@ -31,7 +31,9 @@ int main() {
 	disp_bb(ne_one(b1), "Shift north-east");
 	disp_bb(nw_one(b1), "Shift north-west");
 	disp_bb(se_one(b1), "Shift south-east");
-	disp_bb(sw_one(b1), "Shift south-west");
+	disp_bb(sw_one(b1), "Shift south-west");*/
+
+	std::cout << "res: " << (ne_one(b1) == shift_one(b1, ne));
 
 	return 0;
 }
