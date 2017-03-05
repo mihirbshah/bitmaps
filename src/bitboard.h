@@ -50,6 +50,13 @@ void disp_bb(Bitboard b, const std::string& header = std::string())
 }
 
 
+/*
+ * 3 ways to shift -
+ * 1. Using individual shift functions
+ * 2. Using shift_one()
+ * 3. Using rotate_one()
+ */
+
 /* Bitboard shifts
   northwest    north   northeast
   noWe         nort         noEa
@@ -164,6 +171,38 @@ Bitboard rotate_one(Bitboard b, ray_dir dir)
 {
 	return rotl64(b, shift[dir]) & rotate_mask[dir];
 }
+
+
+Bitboard lookup[64];
+void setup_lookup_table()
+{
+	for (int i = 0; i < 64; ++i)
+		lookup[i] = C64(1) << i;
+}
+
+bool test(Bitboard x, short pos)
+{
+	return x & lookup[pos];
+}
+
+Bitboard set(Bitboard x, short pos)
+{
+	return x | lookup[pos];
+}
+
+Bitboard toggle(Bitboard x, short pos)
+{
+	return x ^ lookup[pos];
+}
+
+Bitboard reset(Bitboard x, short pos)
+{
+	//slower way
+	//return x & ~lookup[pos];
+	//faster way
+	return toggle(set(x, pos), pos);
+}
+
 
 
 #endif /* BITBOARD_H_ */
