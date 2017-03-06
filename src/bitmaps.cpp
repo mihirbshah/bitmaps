@@ -22,9 +22,9 @@ int main() {
     Bitboard light_sq = C64(0x55AA55AA55AA55AA);
     disp_bb(light_sq, "light squares");*/
 
-	Bitboard b1 = C64(0x0100000000000000);
+	/*Bitboard b1 = C64(0x0100000000000000);
 	disp_bb(b1, "Input");
-	/*disp_bb(east_one(b1), "Shift east");
+	disp_bb(east_one(b1), "Shift east");
 	disp_bb(west_one(b1), "Shift west");
 	disp_bb(north_one(b1), "Shift north");
 	disp_bb(south_one(b1), "Shift south");
@@ -39,16 +39,29 @@ int main() {
 	//disp_bb(se_one(b1), "Shift south-east");
 
 	setup_lookup_table();
-	short pos = 56;
+	/*short pos = 56;
 	std::cout << "test bit: " << pos << ". Result: " << test(b1, pos) << std::endl;
 	std::cout << "set bit: " << pos+1 << ". Result: " << std::endl;
 	disp_bb(set(b1, pos+1), "After bit set");
 	std::cout << "toggle bit: " << pos << ". Result: " << std::endl;
 	disp_bb(toggle(b1, pos), "After bit toggle");
 	std::cout << "reset bit: " << pos << ". Result: " << std::endl;
-	disp_bb(reset(b1, pos), "After bit reset");
+	disp_bb(reset(b1, pos), "After bit reset");*/
 
+	/*BitPos onebits = get_set_bits(b1);
+	for (short n : onebits)
+		std::cout << n << ", ";*/
 
-
+	ChessBoard board;
+	board.disp_cboard();
+	Move m1(ChessBoard::e2, ChessBoard::e4, ChessBoard::nPawn, ChessBoard::nWhite);
+	board.quite_move(m1);
+	board.disp_cboard("After move e2-e4");
+	m1 = Move(ChessBoard::d7, ChessBoard::d5, ChessBoard::nPawn, ChessBoard::nBlack);
+	board.quite_move(m1);
+	board.disp_cboard("After move d7-d5");
+	m1 = Move(ChessBoard::e4, ChessBoard::d5, ChessBoard::nPawn, ChessBoard::nWhite, ChessBoard::nPawn, ChessBoard::nBlack);
+	board.capture_move(m1);
+	board.disp_cboard("After move e4-d5");
 	return 0;
 }
