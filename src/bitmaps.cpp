@@ -38,8 +38,8 @@ int main() {
 	//disp_bb(shift_one(b1, se), "Shift south-east");
 	//disp_bb(se_one(b1), "Shift south-east");
 
-	setup_lookup_table();
-	/*short pos = 56;
+	/*setup_lookup_table();
+	short pos = 56;
 	std::cout << "test bit: " << pos << ". Result: " << test(b1, pos) << std::endl;
 	std::cout << "set bit: " << pos+1 << ". Result: " << std::endl;
 	disp_bb(set(b1, pos+1), "After bit set");
@@ -52,6 +52,7 @@ int main() {
 	for (short n : onebits)
 		std::cout << n << ", ";*/
 
+	/*setup_lookup_table();
 	ChessBoard board;
 	board.disp_cboard();
 	Move m1(ChessBoard::e2, ChessBoard::e4, ChessBoard::nPawn, ChessBoard::nWhite);
@@ -62,6 +63,15 @@ int main() {
 	board.disp_cboard("After move d7-d5");
 	m1 = Move(ChessBoard::e4, ChessBoard::d5, ChessBoard::nPawn, ChessBoard::nWhite, ChessBoard::nPawn, ChessBoard::nBlack);
 	board.capture_move(m1);
-	board.disp_cboard("After move e4-d5");
+	board.disp_cboard("After move e4-d5");*/
+
+	//disp_bb(upper_bits(ChessBoard::c3), "upper bits for c3");
+	//disp_bb(lower_bits(ChessBoard::e5), "lower bits for e5");
+
+	Bitboard b1 = C64(0x00005c00002a0000);
+	disp_bb(b1, "Input");
+	disp_bb(swap_n_bits(b1, ChessBoard::b3, ChessBoard::c6, 5), "swap_5_bits between b3 and c6");
+	disp_bb(delta_swap(b1, C64(0x3e0000), (ChessBoard::c6 - ChessBoard::b3)), "delta_swap with delta=c6-b3");
+
 	return 0;
 }

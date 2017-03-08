@@ -373,4 +373,44 @@ void ChessBoard::capture_move(Move m)
 	empty_sq ^= fromBB;
 }
 
+Bitboard upper_bits(Position pos)
+{
+	return C64(~1) << pos;
+}
+
+Bitboard lower_bits(Position pos)
+{
+	return (C64(1) << pos) - 1;
+}
+
+// http://chessprogramming.wikispaces.com/General+Setwise+Operations#Shifting Bitboards-Swapping Bits
+/**
+ * swap n non-overlapping bits from index "from" to index "to"
+ * @param b any bitboard
+ * @param from,to positions on bitboard
+ * @param n number of consecutive bits to swap
+ * @return bitboard with swapped bit-sequences
+ */
+Bitboard swap_n_bits(Bitboard b, Position from, Position to, int n)
+{
+	Bitboard m = (1 << n) - 1;
+	Bitboard x = ((b >> from) ^ (b >> to)) & m;
+	return ((x << from) ^ (x << to)) ^ b;
+}
+
+/**
+ * swap any non-overlapping pairs of bits that are delta places apart
+ * @param b any bitboard
+ * @param mask has a 1 on the least significant position
+ *        for each pair supposed to be swapped
+ * @param delta of pairwise swapped bits
+ * @return bitboard b with bits swapped
+ */
+
+Bitboard delta_swap(Bitboard b, Bitboard mask, int delta)
+{
+	Bitboard x = (b ^ (b >> delta)) & mask;
+	return (x ^ (x << delta)) ^ b;
+}
+
 #endif /* BITBOARD_H_ */
