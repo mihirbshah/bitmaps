@@ -497,5 +497,32 @@ Bitboard smear_ls0b_down(Bitboard b)
 	return b & (b + 1);
 }
 
+bool empty(Bitboard b) { return !b; }
+
+// Bitboard is power of 2
+bool popcnt_eq_1(Bitboard b)
+{
+	return (!empty(b) && !reset_ls1b_of_x(b));
+}
+
+// popcnt = 0 or 1
+bool popcnt_le_1(Bitboard b)
+{
+	return !reset_ls1b_of_x(b);
+}
+
+// popcnt > 1
+bool popcnt_gt_1(Bitboard b)
+{
+	return reset_ls1b_of_x(b);
+}
+
+// x % 2^n == x & (2^n - 1)
+Bitboard mod(Bitboard x, Bitboard y)
+{
+	if (popcnt_eq_1(y)) return x & (y - 1);
+	return x % y;
+}
+
 
 #endif /* BITBOARD_H_ */
