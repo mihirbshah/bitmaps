@@ -413,4 +413,89 @@ Bitboard delta_swap(Bitboard b, Bitboard mask, int delta)
 	return (x ^ (x << delta)) ^ b;
 }
 
+// Get LS1B
+Bitboard ls1b_of_x(Bitboard b)
+{
+	return b & (-b);
+}
+
+// Reset LS1B
+Bitboard reset_ls1b_of_x(Bitboard b)
+{
+	return b & (b - 1);
+}
+
+// Get mask of all bits above LS1B set
+Bitboard above_ls1b_mask(Bitboard b)
+{
+	return b ^ (-b);
+}
+
+// Get mask of all bits below (including) LS1B
+Bitboard below_ls1b_mask_including(Bitboard b)
+{
+	return b ^ (b - 1);
+}
+
+// Get mask of all bits below LS1B
+Bitboard below_ls1b_mask(Bitboard b)
+{
+	return (~b) & (b - 1);
+}
+
+// Paint all bits above LS1B with 1b
+Bitboard smear_ls1b_up(Bitboard b)
+{
+	return b | (-b);
+}
+
+// Paint all bits below LS1B with 1b
+Bitboard smear_ls1b_down(Bitboard b)
+{
+	return b | (b - 1);
+}
+
+// Get LS0B
+Bitboard ls0b_of_x(Bitboard b)
+{
+	return b | ~(b + 1);
+}
+
+// Set LS0B
+Bitboard set_ls0b_of_x(Bitboard b)
+{
+	return b | (b + 1);
+}
+
+// Get mask of all bits below (including) LS0B
+Bitboard below_ls0b_mask_including(Bitboard b)
+{
+	return b ^ (b + 1);
+}
+
+// Get mask of all bits below LS0B
+Bitboard below_ls0b_mask(Bitboard b)
+{
+	return b & ~(b + 1);
+}
+
+// Get mask of all bits above LS0B set
+Bitboard above_ls0b_mask(Bitboard b)
+{
+	return ~below_ls0b_mask_including(b);
+}
+
+// Paint all bits above LS0B with 0b
+Bitboard smear_ls0b_up(Bitboard b)
+{
+	return below_ls0b_mask(b);
+}
+
+// Paint all bits below LS0B with 0b
+Bitboard smear_ls0b_down(Bitboard b)
+{
+	return b & (b + 1);
+}
+
+
 #endif /* BITBOARD_H_ */
