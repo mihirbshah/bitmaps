@@ -83,7 +83,7 @@ int main() {
 	disp_bb(smear_ls1b_up(b1), "smear_ls1b_up");
 	disp_bb(smear_ls1b_down(b1), "smear_ls1b_down");*/
 
-	Bitboard b1 = C64(0x80c0e0f0f8fcfeff);
+	/*Bitboard b1 = C64(0x80c0e0f0f8fcfeff);
 	disp_bb(b1, "Input");
 	disp_bb(ls0b_of_x(b1), "ls0b_of_x");
 	disp_bb(set_ls0b_of_x(b1), "set_ls0b_of_x");
@@ -91,7 +91,14 @@ int main() {
 	disp_bb(below_ls0b_mask(b1), "below_ls0b_mask");
 	disp_bb(above_ls0b_mask(b1), "above_ls0b_mask");
 	disp_bb(smear_ls0b_up(b1), "smear_ls0b_up");
-	disp_bb(smear_ls0b_down(b1), "smear_ls0b_down");
+	disp_bb(smear_ls0b_down(b1), "smear_ls0b_down");*/
+
+	Bitboard b1 = C64(0x80c0e0f0f8fcfeff);
+	disp_bb(b1, "Input");
+	std::cout << "Population count(1) for b1: " << pop_cnt_1(b1) << std::endl;
+	init_pop_cnt_of_byte();
+	std::cout << "Population count(2) for b1: " << pop_cnt_2(b1) << std::endl;
+
 
 
 	return 0;

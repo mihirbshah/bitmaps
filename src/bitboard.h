@@ -524,5 +524,39 @@ Bitboard mod(Bitboard x, Bitboard y)
 	return x % y;
 }
 
+// population count - Kernighan way
+int pop_cnt_1(Bitboard b)
+{
+	int cnt = 0;
+	while (b)
+	{
+		++cnt;
+		b = reset_ls1b_of_x(b);
+	}
+	return cnt;
+}
+
+// population count - lookup table
+unsigned char pop_cnt_of_byte[256];
+void init_pop_cnt_of_byte()
+{
+	pop_cnt_of_byte[0] = 0;
+	for (int i = 1; i < 256; ++i)
+		pop_cnt_of_byte[i] = pop_cnt_of_byte[i/2] + mod(i,2);
+}
+
+int pop_cnt_2(Bitboard b)
+{
+	return pop_cnt_of_byte[b         & 0xff] +
+		   pop_cnt_of_byte[(b >> 8)  & 0xff] +
+		   pop_cnt_of_byte[(b >> 16) & 0xff] +
+		   pop_cnt_of_byte[(b >> 24) & 0xff] +
+		   pop_cnt_of_byte[(b >> 32) & 0xff] +
+		   pop_cnt_of_byte[(b >> 40) & 0xff] +
+		   pop_cnt_of_byte[(b >> 48) & 0xff] +
+		   pop_cnt_of_byte[(b >> 56) & 0xff];
+}
+
+
 
 #endif /* BITBOARD_H_ */
