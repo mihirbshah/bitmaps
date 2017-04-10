@@ -118,13 +118,24 @@ int main() {
 
 	Bitboard wpawn = C64(0x481620400);
 	Bitboard bpawn = C64(0x43048008000000);
-	disp_bb(wpawn, "white pawn");
+	/*disp_bb(wpawn, "white pawn");
 	disp_bb(wpawn_front_fill(wpawn), "white pawn front fill");
 	disp_bb(wpawn_rear_fill(wpawn), "white pawn rear fill");
 	disp_bb(bpawn, "black pawn");
 	disp_bb(bpawn_front_fill(bpawn), "black pawn front fill");
-	disp_bb(bpawn_rear_fill(bpawn), "black pawn rear fill");
+	disp_bb(bpawn_rear_fill(bpawn), "black pawn rear fill");*/
 
+	disp_bb(wpawn, "white pawn");
+	disp_bb(wpawn_front_span(wpawn), "white pawn front span");
+	disp_bb(wpawn_rear_span(wpawn), "white pawn rear span");
+	disp_bb(wpawn_stop(wpawn), "white pawn stop squares");
+	disp_bb(wpawn_telestops(wpawn), "white pawn telestop squares");
+
+	disp_bb(bpawn, "black pawn");
+	disp_bb(bpawn_front_span(bpawn), "black pawn front span");
+	disp_bb(bpawn_rear_span(bpawn), "black pawn rear span");
+	disp_bb(bpawn_stop(bpawn), "black pawn stop squares");
+	disp_bb(bpawn_telestops(bpawn), "black pawn telestop squares");
 
 
 	return 0;

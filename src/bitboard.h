@@ -718,5 +718,49 @@ Bitboard bpawn_rear_fill(Bitboard b)
 	return pawn_north_fill(b);
 }
 
+Bitboard wpawn_front_span(Bitboard b)
+{
+	return north_one(pawn_north_fill(b));
+}
+
+Bitboard wpawn_rear_span(Bitboard b)
+{
+	return south_one(pawn_south_fill(b));
+}
+
+Bitboard bpawn_front_span(Bitboard b)
+{
+	return south_one(pawn_south_fill(b));
+}
+
+Bitboard bpawn_rear_span(Bitboard b)
+{
+	return north_one(pawn_north_fill(b));
+}
+
+Bitboard pawn_interspans(Bitboard wpawn, Bitboard bpawn)
+{
+	return wpawn_front_span(wpawn) & bpawn_front_span(bpawn);
+}
+
+Bitboard wpawn_stop(Bitboard b)
+{
+	return north_one(b);
+}
+
+Bitboard bpawn_stop(Bitboard b)
+{
+	return south_one(b);
+}
+
+Bitboard wpawn_telestops(Bitboard b)
+{
+	return wpawn_front_span(b) ^ wpawn_stop(b);
+}
+
+Bitboard bpawn_telestops(Bitboard b)
+{
+	return bpawn_front_span(b) ^ bpawn_stop(b);
+}
 
 #endif /* BITBOARD_H_ */
