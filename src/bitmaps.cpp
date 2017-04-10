@@ -93,13 +93,28 @@ int main() {
 	disp_bb(smear_ls0b_up(b1), "smear_ls0b_up");
 	disp_bb(smear_ls0b_down(b1), "smear_ls0b_down");*/
 
-	Bitboard b1 = C64(0x80c0e0f0f8fcfeff);
+	/*Bitboard b1 = C64(0x80c0e0f0f8fcfeff);
 	disp_bb(b1, "Input");
 	std::cout << "Population count(1) for b1: " << pop_cnt_1(b1) << std::endl;
 	init_pop_cnt_of_byte();
-	std::cout << "Population count(2) for b1: " << pop_cnt_2(b1) << std::endl;
+	std::cout << "Population count(2) for b1: " << pop_cnt_2(b1) << std::endl;*/
 
+	/*Bitboard b1 = C64(0x00c0e0f0f8fcfe00);
+	disp_bb(b1, "Input");
+	std::cout << "bit scan forward: " << bit_scan_forward(b1) << std::endl;
+	std::cout << "bit scan reverse: " << bit_scan_reverse(b1) << std::endl;
+	std::cout << "trailing zero count: " << trailing_zero_cnt(b1) << std::endl;
+	std::cout << "leading zero count: " << leading_zero_cnt(b1) << std::endl;*/
 
+	Bitboard b1 = C64(0x1e2222120e0a1222);
+	disp_bb(b1, "Input");
+	disp_bb(flip_vertical(b1), "Vertical flip");
+	disp_bb(mirror_horizontal(b1), "Horizontal mirror");
+	disp_bb(flip_diag_a1h8(b1), "Flip diagonal a1h8");
+	disp_bb(flip_diag_a8h1(b1), "Flip diagonal a8h1");
+	disp_bb(rotate180(b1), "rotate180");
+	disp_bb(rotate90_clockwise(b1), "rotate90 clockwise");
+	disp_bb(rotate90_anticlockwise(b1), "rotate90 anticlockwise");
 
 	return 0;
 }

@@ -13,6 +13,7 @@
 #include <vector>
 #include <math.h>
 #include <algorithm>
+#include <cassert>
 
 // macro to generate unsigned long long constants
 #define C64(constantU64) constantU64##ULL
@@ -524,6 +525,14 @@ Bitboard mod(Bitboard x, Bitboard y)
 	return x % y;
 }
 
+int pop_cnt_0(Bitboard b)
+{
+	int cnt = 0;
+	for (int i = 0; i < 64; ++i, b >>= 1)
+		cnt += (int)(b & 1);
+	return cnt;
+}
+
 // population count - Kernighan way
 int pop_cnt_1(Bitboard b)
 {
@@ -557,6 +566,115 @@ int pop_cnt_2(Bitboard b)
 		   pop_cnt_of_byte[(b >> 56) & 0xff];
 }
 
+// Return bit index of LS1B
+int bit_scan_forward(Bitboard b)
+{
+	assert(b);
+	// slow
+	//return log2(ls1b_of_x(b));
 
+	// fast (because it avoids negation)
+	// return log2(below_ls1b_mask_including(b));
+
+	// faster avoids log2
+	return pop_cnt_1(below_ls1b_mask_including(b)) - 1;
+}
+
+int bit_scan_reverse(Bitboard b)
+{
+	return floor(log2(b));
+}
+
+int trailing_zero_cnt(Bitboard b)
+{
+	if (b) return bit_scan_forward(b);
+	return 64;
+}
+
+int leading_zero_cnt(Bitboard b)
+{
+	if (b) return bit_scan_reverse(b) ^ 63; // xor with 63 because 63 is the largest value return by bit_scan_reverse
+	return 64;
+}
+
+Bitboard sum(Bitboard a, Bitboard b)
+{
+	return (a ^ b) + 2 * (a & b);
+}
+
+Bitboard flip_vertical(Bitboard b)
+{
+  Bitboard sel_mask_1 = C64(0xff000000000000ff);
+  Bitboard sel_mask_2 = C64(0x00ff00000000ff00);
+  Bitboard sel_mask_3 = C64(0x0000ff0000ff0000);
+  Bitboard sel_mask_4 = C64(0x000000ffff000000);
+  Bitboard and_mask_1 = C64(0x00000000000000ff);
+  Bitboard and_mask_2 = C64(0x000000000000ff00);
+  Bitboard and_mask_3 = C64(0x0000000000ff0000);
+  Bitboard and_mask_4 = C64(0x00000000ff000000);
+  return delta_swap(b & sel_mask_1, and_mask_1, (ChessBoard::a8 - ChessBoard::a1)) |
+         delta_swap(b & sel_mask_2, and_mask_2, (ChessBoard::a7 - ChessBoard::a2)) |
+         delta_swap(b & sel_mask_3, and_mask_3, (ChessBoard::a6 - ChessBoard::a3)) |
+         delta_swap(b & sel_mask_4, and_mask_4, (ChessBoard::a5 - ChessBoard::a4));
+}
+
+Bitboard mirror_horizontal(Bitboard b)
+{
+  Bitboard sel_mask_1 = C64(0x8181818181818181);
+  Bitboard sel_mask_2 = C64(0x4242424242424242);
+  Bitboard sel_mask_3 = C64(0x2424242424242424);
+  Bitboard sel_mask_4 = C64(0x1818181818181818);
+  Bitboard and_mask_1 = C64(0x0101010101010101);
+  Bitboard and_mask_2 = C64(0x0202020202020202);
+  Bitboard and_mask_3 = C64(0x0404040404040404);
+  Bitboard and_mask_4 = C64(0x0808080808080808);
+  return delta_swap(b & sel_mask_1, and_mask_1, (ChessBoard::h1 - ChessBoard::a1)) |
+         delta_swap(b & sel_mask_2, and_mask_2, (ChessBoard::g1 - ChessBoard::b1)) |
+         delta_swap(b & sel_mask_3, and_mask_3, (ChessBoard::f1 - ChessBoard::c1)) |
+         delta_swap(b & sel_mask_4, and_mask_4, (ChessBoard::e1 - ChessBoard::d1));
+}
+
+Bitboard flip_diag_a1h8(Bitboard b) {
+  Bitboard t;
+  const Bitboard k1 = C64(0x5500550055005500);
+  const Bitboard k2 = C64(0x3333000033330000);
+  const Bitboard k4 = C64(0x0f0f0f0f00000000);
+  t  = k4 & (b ^ (b << 28));
+  b ^=       t ^ (t >> 28) ;
+  t  = k2 & (b ^ (b << 14));
+  b ^=       t ^ (t >> 14) ;
+  t  = k1 & (b ^ (b <<  7));
+  b ^=       t ^ (t >>  7) ;
+  return b;
+}
+
+Bitboard flip_diag_a8h1(Bitboard b) {
+  Bitboard t;
+  const Bitboard k1 = C64(0xaa00aa00aa00aa00);
+  const Bitboard k2 = C64(0xcccc0000cccc0000);
+  const Bitboard k4 = C64(0xf0f0f0f00f0f0f0f);
+  t  =       b ^ (b << 36) ;
+  b ^= k4 & (t ^ (b >> 36));
+  t  = k2 & (b ^ (b << 18));
+  b ^=       t ^ (t >> 18) ;
+  t  = k1 & (b ^ (b <<  9));
+  b ^=       t ^ (t >>  9) ;
+  return b;
+}
+
+Bitboard rotate180(Bitboard b)
+{
+	return flip_vertical(mirror_horizontal(b));
+}
+
+Bitboard rotate90_clockwise(Bitboard b)
+{
+	return flip_vertical(flip_diag_a1h8(b));
+}
+
+Bitboard rotate90_anticlockwise(Bitboard b)
+{
+	return flip_vertical(flip_diag_a8h1(b));
+}
 
 #endif /* BITBOARD_H_ */
