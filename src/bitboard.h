@@ -677,4 +677,46 @@ Bitboard rotate90_anticlockwise(Bitboard b)
 	return flip_vertical(flip_diag_a8h1(b));
 }
 
+Bitboard pawn_north_fill(Bitboard b)
+{
+	b |= (b << 8);
+	b |= (b << 16);
+	b |= (b << 32);
+	return b;
+}
+
+Bitboard pawn_south_fill(Bitboard b)
+{
+	b |= (b >> 8);
+	b |= (b >> 16);
+	b |= (b >> 32);
+	return b;
+}
+
+Bitboard pawn_file_fill(Bitboard b)
+{
+	return pawn_north_fill(b) | pawn_south_fill(b);
+}
+
+Bitboard wpawn_front_fill(Bitboard b)
+{
+	return pawn_north_fill(b);
+}
+
+Bitboard wpawn_rear_fill(Bitboard b)
+{
+	return pawn_south_fill(b);
+}
+
+Bitboard bpawn_front_fill(Bitboard b)
+{
+	return pawn_south_fill(b);
+}
+
+Bitboard bpawn_rear_fill(Bitboard b)
+{
+	return pawn_north_fill(b);
+}
+
+
 #endif /* BITBOARD_H_ */

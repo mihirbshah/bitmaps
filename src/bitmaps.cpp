@@ -106,7 +106,7 @@ int main() {
 	std::cout << "trailing zero count: " << trailing_zero_cnt(b1) << std::endl;
 	std::cout << "leading zero count: " << leading_zero_cnt(b1) << std::endl;*/
 
-	Bitboard b1 = C64(0x1e2222120e0a1222);
+	/*Bitboard b1 = C64(0x1e2222120e0a1222);
 	disp_bb(b1, "Input");
 	disp_bb(flip_vertical(b1), "Vertical flip");
 	disp_bb(mirror_horizontal(b1), "Horizontal mirror");
@@ -114,7 +114,18 @@ int main() {
 	disp_bb(flip_diag_a8h1(b1), "Flip diagonal a8h1");
 	disp_bb(rotate180(b1), "rotate180");
 	disp_bb(rotate90_clockwise(b1), "rotate90 clockwise");
-	disp_bb(rotate90_anticlockwise(b1), "rotate90 anticlockwise");
+	disp_bb(rotate90_anticlockwise(b1), "rotate90 anticlockwise");*/
+
+	Bitboard wpawn = C64(0x481620400);
+	Bitboard bpawn = C64(0x43048008000000);
+	disp_bb(wpawn, "white pawn");
+	disp_bb(wpawn_front_fill(wpawn), "white pawn front fill");
+	disp_bb(wpawn_rear_fill(wpawn), "white pawn rear fill");
+	disp_bb(bpawn, "black pawn");
+	disp_bb(bpawn_front_fill(bpawn), "black pawn front fill");
+	disp_bb(bpawn_rear_fill(bpawn), "black pawn rear fill");
+
+
 
 	return 0;
 }
