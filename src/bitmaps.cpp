@@ -116,14 +116,14 @@ int main() {
 	disp_bb(rotate90_clockwise(b1), "rotate90 clockwise");
 	disp_bb(rotate90_anticlockwise(b1), "rotate90 anticlockwise");*/
 
-	Bitboard wpawn = C64(0x481620400);
+	/*Bitboard wpawn = C64(0x481620400);
 	Bitboard bpawn = C64(0x43048008000000);
-	/*disp_bb(wpawn, "white pawn");
+	disp_bb(wpawn, "white pawn");
 	disp_bb(wpawn_front_fill(wpawn), "white pawn front fill");
 	disp_bb(wpawn_rear_fill(wpawn), "white pawn rear fill");
 	disp_bb(bpawn, "black pawn");
 	disp_bb(bpawn_front_fill(bpawn), "black pawn front fill");
-	disp_bb(bpawn_rear_fill(bpawn), "black pawn rear fill");*/
+	disp_bb(bpawn_rear_fill(bpawn), "black pawn rear fill");
 
 	disp_bb(wpawn, "white pawn");
 	disp_bb(wpawn_front_span(wpawn), "white pawn front span");
@@ -135,8 +135,21 @@ int main() {
 	disp_bb(bpawn_front_span(bpawn), "black pawn front span");
 	disp_bb(bpawn_rear_span(bpawn), "black pawn rear span");
 	disp_bb(bpawn_stop(bpawn), "black pawn stop squares");
-	disp_bb(bpawn_telestops(bpawn), "black pawn telestop squares");
+	disp_bb(bpawn_telestops(bpawn), "black pawn telestop squares");*/
 
+
+	Bitboard pawn = C64(0x8000000);
+	disp_bb(pawn, "pawn");
+	disp_bb(wpawn_east_attack_front_spans(pawn), "white pawn east attacks front spans");
+	disp_bb(wpawn_west_attack_front_spans(pawn), "white pawn west attacks front spans");
+	disp_bb(bpawn_east_attack_front_spans(pawn), "black pawn east attacks front spans");
+	disp_bb(bpawn_west_attack_front_spans(pawn), "black pawn west attacks front spans");
+	disp_bb(wpawn_east_attack_rear_spans(pawn), "white pawn east attacks rear spans");
+	disp_bb(wpawn_west_attack_rear_spans(pawn), "white pawn west attacks rear spans");
+	disp_bb(bpawn_east_attack_rear_spans(pawn), "black pawn east attacks rear spans");
+	disp_bb(bpawn_west_attack_rear_spans(pawn), "black pawn west attacks rear spans");
+	disp_bb(pawn_east_attacks_file_fill(pawn), "pawn east attacks file fill");
+	disp_bb(pawn_west_attacks_file_fill(pawn), "pawn west attacks file fill");
 
 	return 0;
 }

@@ -763,4 +763,54 @@ Bitboard bpawn_telestops(Bitboard b)
 	return bpawn_front_span(b) ^ bpawn_stop(b);
 }
 
+Bitboard wpawn_east_attack_front_spans(Bitboard b)
+{
+	return east_one(wpawn_front_span(b));
+}
+
+Bitboard wpawn_west_attack_front_spans(Bitboard b)
+{
+	return west_one(wpawn_front_span(b));
+}
+
+Bitboard bpawn_east_attack_front_spans(Bitboard b)
+{
+	return east_one(bpawn_front_span(b));
+}
+
+Bitboard bpawn_west_attack_front_spans(Bitboard b)
+{
+	return west_one(bpawn_front_span(b));
+}
+
+Bitboard wpawn_east_attack_rear_spans(Bitboard b)
+{
+	return east_one(wpawn_rear_fill(b));
+}
+
+Bitboard wpawn_west_attack_rear_spans(Bitboard b)
+{
+	return west_one(wpawn_rear_fill(b));
+}
+
+Bitboard bpawn_east_attack_rear_spans(Bitboard b)
+{
+	return east_one(bpawn_rear_fill(b));
+}
+
+Bitboard bpawn_west_attack_rear_spans(Bitboard b)
+{
+	return west_one(bpawn_rear_fill(b));
+}
+
+Bitboard pawn_east_attacks_file_fill(Bitboard b)
+{
+	return east_one(pawn_file_fill(b));
+}
+
+Bitboard pawn_west_attacks_file_fill(Bitboard b)
+{
+	return west_one(pawn_file_fill(b));
+}
+
 #endif /* BITBOARD_H_ */
