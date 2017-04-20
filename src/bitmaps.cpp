@@ -151,13 +151,18 @@ int main() {
 	disp_bb(pawn_east_attacks_file_fill(pawn), "pawn east attacks file fill");
 	disp_bb(pawn_west_attacks_file_fill(pawn), "pawn west attacks file fill");*/
 
-	Bitboard queen_n_rook = C64(0x108000020000000);
+	/*Bitboard queen_n_rook = C64(0x108000020000000);
 	Bitboard empty = C64(0xbe53bdfbd77b98b6);
 	disp_bb(queen_n_rook, "Queen & Rook");
 	disp_bb(empty, "Empty Squares");
 	disp_bb(south_attacks(queen_n_rook, empty), "South Attacks for Queen & Rook");
 	disp_bb(north_attacks(queen_n_rook, empty), "North Attacks for Queen & Rook");
-	disp_bb(east_attacks(queen_n_rook, empty), "East Attacks for Queen & Rook");
+	disp_bb(east_attacks(queen_n_rook, empty), "East Attacks for Queen & Rook");*/
+
+	Bitboard knight = C64(0x2000000);
+	disp_bb(knight, "Knight");
+	disp_bb(knight_attacks(knight), "Knight attacks");
+    std::cout << "Knight Distance between a1 and h8: " << knight_distance(ChessBoard::a1, ChessBoard::h8) << std::endl;
 
 	return 0;
 }

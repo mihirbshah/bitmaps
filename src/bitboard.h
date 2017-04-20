@@ -86,6 +86,8 @@ namespace
 {
 	const Bitboard not_a_file = C64(0xfefefefefefefefe); // ~0x0101010101010101
 	const Bitboard not_h_file = C64(0x7f7f7f7f7f7f7f7f); // ~0x8080808080808080
+	const Bitboard not_g_h_file = C64(0x3f3f3f3f3f3f3f3f);
+	const Bitboard not_a_b_file = C64(0xfcfcfcfcfcfcfcfc);
 };
 
 Bitboard east_one(Bitboard b)
@@ -926,3 +928,30 @@ Bitboard sw_attacks(Bitboard piece_bb, Bitboard empty)
 
 // TODO Implement Kogge-Stone algorithm for occluded fill & compare with Dumb7 fill above
 
+
+Bitboard knight_attacks(Bitboard b)
+{
+	Bitboard l1 = (b >> 1) & not_h_file;
+	Bitboard l2 = (b >> 2) & not_g_h_file;
+	Bitboard r1 = (b << 1) & not_a_file;
+	Bitboard r2 = (b << 2) & not_a_b_file;
+	Bitboard h1 = l1 | r1;
+	Bitboard h2 = l2 | r2;
+	return (h1 << 16) | (h1 >> 16) | (h2 << 8) | (h2 >> 8);
+}
+
+int calc_knight_distance(Bitboard b1, Bitboard b2)
+{
+	assert(b1 && b2);
+	int d = 0;
+	while ((b1 & b2) == 0)
+	{
+		b1 = knight_attacks(b1); ++d;
+	}
+	return d;
+}
+
+int knight_distance(ChessBoard::Position source, ChessBoard::Position target)
+{
+	return calc_knight_distance(C64(1) << source, C64(1) << target);
+}
