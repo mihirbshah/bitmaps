@@ -138,7 +138,7 @@ int main() {
 	disp_bb(bpawn_telestops(bpawn), "black pawn telestop squares");*/
 
 
-	Bitboard pawn = C64(0x8000000);
+	/*Bitboard pawn = C64(0x8000000);
 	disp_bb(pawn, "pawn");
 	disp_bb(wpawn_east_attack_front_spans(pawn), "white pawn east attacks front spans");
 	disp_bb(wpawn_west_attack_front_spans(pawn), "white pawn west attacks front spans");
@@ -149,7 +149,15 @@ int main() {
 	disp_bb(bpawn_east_attack_rear_spans(pawn), "black pawn east attacks rear spans");
 	disp_bb(bpawn_west_attack_rear_spans(pawn), "black pawn west attacks rear spans");
 	disp_bb(pawn_east_attacks_file_fill(pawn), "pawn east attacks file fill");
-	disp_bb(pawn_west_attacks_file_fill(pawn), "pawn west attacks file fill");
+	disp_bb(pawn_west_attacks_file_fill(pawn), "pawn west attacks file fill");*/
+
+	Bitboard queen_n_rook = C64(0x108000020000000);
+	Bitboard empty = C64(0xbe53bdfbd77b98b6);
+	disp_bb(queen_n_rook, "Queen & Rook");
+	disp_bb(empty, "Empty Squares");
+	disp_bb(south_attacks(queen_n_rook, empty), "South Attacks for Queen & Rook");
+	disp_bb(north_attacks(queen_n_rook, empty), "North Attacks for Queen & Rook");
+	disp_bb(east_attacks(queen_n_rook, empty), "East Attacks for Queen & Rook");
 
 	return 0;
 }
