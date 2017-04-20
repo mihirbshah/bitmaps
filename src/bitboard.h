@@ -923,3 +923,6 @@ Bitboard sw_attacks(Bitboard piece_bb, Bitboard empty)
 	flood |=            (piece_bb >> 9) & empty;
 	return sw_one(flood);
 }
+
+// TODO Implement Kogge-Stone algorithm for occluded fill & compare with Dumb7 fill above
+
